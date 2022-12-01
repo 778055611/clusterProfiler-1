@@ -1,7 +1,7 @@
 PKGNAME := $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
 PKGVERS := $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
 PKGSRC  := $(shell basename `pwd`)
-BIOCVER := RELEASE_3_14
+BIOCVER := RELEASE_3_16
 
 
 all: rd check clean
@@ -65,3 +65,10 @@ release:
 biocinit:
 	git remote add upstream git@git.bioconductor.org:packages/$(PKGNAME).git;\
 	git fetch --all
+
+
+prerelease:
+	cd data;\
+	Rscript -e 'clusterProfiler:::get_kegg_species(save=TRUE)'
+
+	

@@ -1,3 +1,7 @@
+# clusterProfiler
+
++ Bioconductor RELEASE_3_16 (2022-11-02, Wed)
+
 
 <!--
 
@@ -5,9 +9,46 @@ TODO:
 
 + Uniprot to KO, <https://www.biostars.org/p/415837/>
   - e.g. <https://www.genome.jp/dbget-bin/get_linkdb?-t+genes+up:A0A059ZTB3>
++ aggregate multiple p values
+  - <https://en.wikipedia.org/wiki/Fisher's_method>
+  - e.g. independent test of cancer sample 1 vs control 1 and cancer sample 2 vs control 2, then combine results
+  - e.g. independent test for different omics data and then combine results
+
 
 -->
-# clusterProfiler 4.3.2.991
+
+# clusterProfiler 4.5.3
+
++ `GSEA()` supports `GSONList` object (2022-09-21, Wed)
++ `enricher()` supports `GSONList` object (2022-09-06, Tue)
+
+# clusterProfiler 4.5.2
+
++ support passing a GSON object to `enricher(USER_DATA)` and `GSEA(USER_DATA)` (2022-8-01, Mon)
++ `gson_kegg_mapper()` allows building a gson object from outputs of KEGG Mapper service (2022-07-29, Fri, #492)
++ fix `show` method for `compareClusterResult` (2022-06-21, Tue, #473)
++ `gson_KEGG()` download latest KEGG and output a GSON object (2022-06-08, Wed)
++ support passing a GSON object to `gseKEGG(organism)` 
++ support passing a GSON object to `enrichKEGG(organism)` (2022-06-06, Mon)
+
+# clusterProfiler 4.5.1
+
++ follow KEGG api upgrade that change from http to https (2022-06-06, Mon)
++ use 'wininet' to download KEGG data when `.Platform$OS.type = "windows"` (2022-06-03, Fri)
++ mv `read.gmt` and `read.gmt.wp` to the 'gson' package and reexport these two functions from 'gson' (2022-04-28, Thu)
++ fix `compareCluster` when fun = `enrichPathway`(2022-4-28, Thu)
+
+# clusterProfiler 4.4.0
+
++ Bioconductor 3.15 release
+
+# clusterProfiler 4.3.4
+
++ fix `enrichGO` , `gseGO` and `groupGO` when `keyType = 'SYMBOL'` && `readable=TRUE`(2022-4-9, Sat)
+
+# clusterProfiler 4.3.3
+
++ parse GAF file to prepare GO annotation data (esp for proteomic study) (2022-03-08, Tue, #397, #418, #421, #442)
 + bug fixed in `compareCluster()` (2022-01-27, Thu, #424)
 
 # clusterProfiler 4.3.2

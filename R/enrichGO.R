@@ -18,7 +18,7 @@
 ##' @seealso \code{\link{enrichResult-class}}, \code{\link{compareCluster}}
 ##' @keywords manip
 ##' @export
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @examples
 ##' \dontrun{
 ##'   data(geneList, package = "DOSE")
@@ -81,7 +81,9 @@ enrichGO <- function(gene,
         if (is.null(res))
             return(res)
     }
-
+    if (keyType == 'SYMBOL') {
+        res@readable <- TRUE
+    }
     res@keytype <- keyType
     res@organism <- get_organism(OrgDb)
     if(readable) {

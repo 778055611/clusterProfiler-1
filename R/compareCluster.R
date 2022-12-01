@@ -22,7 +22,7 @@
 ##' @importFrom rlang '%||%'
 ##' @importClassesFrom DOSE compareClusterResult
 ##' @export
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @seealso \code{\link{compareClusterResult-class}}, \code{\link{groupGO}}
 ##'   \code{\link{enrichGO}}
 ##' @keywords manip
@@ -56,10 +56,16 @@ compareCluster <- function(geneClusters,
                            source_from=NULL, ...) {
   
    if(is.character(fun)){
-     if(fun %in% c("groupGO", "enrichGO", "enrichKEGG")){
+     if(fun %in% c("groupGO", "enrichGO", "enrichKEGG",
+                   "gseGO", "gseKEGG", "GSEA", "gseWP")){
        fun <- utils::getFromNamespace(fun, "clusterProfiler")
-     } else if(fun %in% c("enrichDO", "enrichPathway")){
+     } else if(fun %in% c("enrichDO", "enrichDGN", "enrichDGNv", 
+                          "enrichNCG", "gseDO", "gseNCG", "gseDGN")){
        fun <- utils::getFromNamespace(fun , "DOSE")
+     } else if(fun %in% c("enrichPathway", "gsePathway")){
+        fun <- utils::getFromNamespace(fun , "ReactomePA")
+     } else if(fun %in% c("enrichMeSH", "gseMeSH")){
+        fun <- utils::getFromNamespace(fun , "meshes")
      } else {
        source_env <- .GlobalEnv
        if(!is.null(source_from)){
@@ -189,7 +195,7 @@ extract_params <- function(x) {
 ## @param object A \code{compareClusterResult} instance.
 ## @return message
 ## @importFrom methods show
-## @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+## @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @importFrom utils str
 setMethod("show", signature(object="compareClusterResult"),
           function (object){
@@ -217,7 +223,9 @@ setMethod("show", signature(object="compareClusterResult"),
               }
               cat("#\n#...Citation\n")
               citation_msg <- NULL
-              if (fun == "enrichDO" || fun == "enrichNCG") {
+              if (length(fun) == 0) {
+                  # do nothing
+              } else if (fun == "enrichDO" || fun == "enrichNCG") {
                   citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",
                                         "  R/Bioconductor package for Disease Ontology Semantic and Enrichment",
                                         "  analysis. Bioinformatics 2015 31(4):608-609",
@@ -248,7 +256,7 @@ setMethod("show", signature(object="compareClusterResult"),
 ## @return A data frame
 ## @importFrom stats4 summary
 ## @exportMethod summary
-## @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+## @author Guangchuang Yu \url{https://yulab-smu.top}
 setMethod("summary", signature(object="compareClusterResult"),
           function(object, ...) {
               warning("summary method to convert the object to data.frame is deprecated, please use as.data.frame instead.")
@@ -269,6 +277,7 @@ setMethod("summary", signature(object="compareClusterResult"),
 ##' @return a compareClusterResult instance
 ##' @author Guangchuang Yu
 ##' @importFrom plyr ldply
+##' @importFrom methods is
 ##' @export
 merge_result <- function(enrichResultList) {
     if ( !is(enrichResultList, "list")) {

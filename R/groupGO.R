@@ -18,7 +18,7 @@
 ##' @importClassesFrom methods data.frame
 ##' @importFrom DOSE setReadable
 ##' @export
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @examples
 ##'
 ##' 	data(gcSample)
@@ -61,6 +61,10 @@ groupGO <- function(gene, OrgDb, keyType="ENTREZID", ont="CC", level = 2, readab
              gene = gene,
              keytype = keyType
              )
+             
+    if (keyType == 'SYMBOL') {
+        x@readable <- TRUE
+    }
     if(readable == TRUE)
         x <- setReadable(x, OrgDb)
 
@@ -78,7 +82,7 @@ groupGO <- function(gene, OrgDb, keyType="ENTREZID", ont="CC", level = 2, readab
 ## @param object A \code{groupGOResult} instance
 ## @return message
 ## @importFrom methods show
-## @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+## @author Guangchuang Yu \url{https://yulab-smu.top}
 setMethod("show", signature(object="groupGOResult"),
           function (object){
               ont = object@ontology
